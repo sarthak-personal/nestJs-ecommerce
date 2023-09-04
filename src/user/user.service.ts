@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/provider/database/prisma.service';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
+import { CustomUser } from './entities/customUser.entity';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
   constructor(private prismaService: PrismaService) {}
 
-  async addUser(createUserDTO: CreateUserDTO): Promise<User> {
+  async addUser(createUserDTO: CreateUserDTO): Promise<CustomUser> {
     const hashedPassword = await bcrypt.hash(createUserDTO.password, 10);
     const newUser = await this.prismaService.user.create({
       data: {
@@ -18,13 +18,13 @@ export class UserService {
         roles: createUserDTO.roles,
       },
     });
-    return newUser;
+    return newUser as CustomUser;
   }
 
-  async findUser(username: string): Promise<User | undefined> {
+  async findUser(username: string): Promise<CustomUser | undefined> {
     const user = await this.prismaService.user.findUnique({
       where: { username },
     });
-    return user;
+    return user as CustomUser;
   }
 }

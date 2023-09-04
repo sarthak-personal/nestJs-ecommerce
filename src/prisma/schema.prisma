@@ -10,25 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  User
-  Admin
-}
-
 model User {
-  id       Int     @id @default(autoincrement())
-  username String? @unique
-  email    String  @unique
-  password String
-  roles    Role[]
+  id        Int       @id @default(autoincrement())
+  username  String?   @unique
+  email     String    @unique
+  password  String
+  roles     String[]
 }
 
 model Product {
-  id          Int    @id @default(autoincrement())
-  name        String
-  description String
-  price       Int
-  category    String
+  id            Int     @id @default(autoincrement())
+  name          String
+  description   String
+  price         Int
+  category      String
 
   @@map("products")
 }
