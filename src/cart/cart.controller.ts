@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Delete,
   Request,
@@ -17,6 +18,15 @@ import { ItemDTO } from 'src/user/dto/item.dto';
 @Controller('cart')
 export class CartController {
   constructor(private cartService: CartService) {}
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.User)
+  @Get('/')
+  async getCart(@Request() req) {
+    const userId = req.user.userId;
+    const cart = await this.cartService.getCart(userId);
+    return cart;
+  }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)

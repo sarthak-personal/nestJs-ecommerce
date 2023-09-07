@@ -6,6 +6,8 @@ import {
   Delete,
   Put,
   Param,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/request/create-product.dto';
@@ -13,6 +15,7 @@ import { Product } from './entities/product.entity';
 import { UpdateProductDto } from './dto/request/update-product.dto';
 import { GetProductsDto } from './dto/response/get-products.dto';
 import { GetProductDto } from './dto/response/get-product.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('products')
 export class ProductController {
@@ -34,12 +37,18 @@ export class ProductController {
     return await this.productService.addProduct(createdProduct);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('/:id')
   async updateProduct(
+    @Request() req,
     @Param('id') id: string,
     @Body() updatedProduct: UpdateProductDto,
   ): Promise<Product> {
-    return await this.productService.updateProduct(Number(id), updatedProduct);
+    return await this.productService.updateProduct(
+      req.user.userId,
+      Number(id),
+      updatedProduct,
+    );
   }
 
   @Delete('/:id')

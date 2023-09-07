@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  username  String?   @unique
-  email     String    @unique
-  password  String
-  roles     String[]
+  id          Int         @id @default(autoincrement())
+  username    String?     @unique
+  email       String      @unique
+  password    String
+  roles       String[]
 }
 
 model Product {
-  id            Int     @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   name          String
   description   String
   price         Int
@@ -29,20 +29,20 @@ model Product {
 }
 
 model Item {
-  itemId        Int      @id @default(autoincrement())
-  productId     Int      @unique
-  name          String
-  quantity      Int
-  price         Int
-  subTotalPrice Int
-  cart          Cart?    @relation(fields: [cartId], references: [cartId])
-  cartId        Int?
+  itemId          Int      @id @default(autoincrement())
+  productId       Int      @unique
+  name            String
+  quantity        Int
+  price           Int
+  subTotalPrice   Int
+  cart            Cart?    @relation(fields: [cartId], references: [cartId])
+  cartId          Int?
 }
 
 model Cart {
-  cartId     Int    @id @default(autoincrement())
-  userId     Int    @unique
-  items      Item[]
-  totalPrice Int
+  cartId        Int       @id @default(autoincrement())
+  userId        Int       @unique
+  items         Item[]
+  totalPrice    Int
 }
 
