@@ -144,6 +144,7 @@ export class CartService {
     );
 
     if (itemIndex > -1) {
+      cart.items[itemIndex].quantity = 0;
       await this.prismaService.item.delete({
         where: { itemId: cart.items[itemIndex].itemId },
       });
