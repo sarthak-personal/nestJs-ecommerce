@@ -11,37 +11,76 @@ datasource db {
 }
 
 model User {
-  id          Int         @id @default(autoincrement())
-  username    String?     @unique
-  email       String      @unique
-  password    String
-  roles       String[]
+  id       Int      @id @default(autoincrement())
+  username String?  @unique
+  email    String   @unique
+  password String
+  roles    String[]
 }
 
 model Product {
-  id            Int       @id @default(autoincrement())
-  name          String
-  description   String
-  price         Int
-  category      String
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  price       Int
+  category    String
 
   @@map("products")
 }
 
+enum OrderStatus {
+  Pending
+  Shipped
+  Delivered
+  Canceled
+}
+
+enum PaymentMethod {
+  CreditCard
+  CashOnDelivery
+  PayPal
+}
+
+model Order {
+  id              Int           @id @default(autoincrement())
+  orderNumber     String        @unique
+  userId          Int       
+  orderDate       DateTime
+  status          OrderStatus   @default(Pending)
+  totalAmount     Int
+  paymentMethod   PaymentMethod @default(CashOnDelivery)
+  shippingAddress Address       @relation(fields: [addressId], references: [id])
+  items           Item[]
+  addressId       Int
+
+  @@map("orders")
+}
+
+model Address {
+  id         Int      @id @default(autoincrement())
+  street     String
+  city       String
+  state      String
+  postalCode String
+  orders     Order[]
+}
+
 model Item {
-  itemId          Int      @id @default(autoincrement())
-  productId       Int      @unique
-  name            String
-  quantity        Int
-  price           Int
-  subTotalPrice   Int
-  cart            Cart?    @relation(fields: [cartId], references: [cartId])
-  cartId          Int?
+  itemId        Int    @id @default(autoincrement())
+  productId     Int    @unique
+  name          String
+  quantity      Int
+  price         Int
+  subTotalPrice Int
+  cart          Cart?  @relation(fields: [cartId], references: [cartId])
+  cartId        Int?
+  Order         Order? @relation(fields: [orderId], references: [id])
+  orderId       Int?
 }
 
 model Cart {
-  cartId        Int       @id @default(autoincrement())
-  userId        Int       @unique
-  items         Item[]
-  totalPrice    Int
+  cartId     Int    @id @default(autoincrement())
+  userId     Int    @unique
+  items      Item[]
+  totalPrice Int
 }

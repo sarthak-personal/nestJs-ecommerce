@@ -21,7 +21,7 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
-  @Get('/')
+  @Get('')
   async getCart(@Request() req) {
     const userId = req.user.userId;
     const cart = await this.cartService.getCart(userId);
@@ -30,7 +30,7 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
-  @Post('/')
+  @Post('')
   async addItemToCart(@Request() req, @Body() itemDTO: ItemDTO) {
     const userId = req.user.userId;
     const cart = await this.cartService.addItemToCart(userId, itemDTO);
@@ -49,10 +49,10 @@ export class CartController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
-  @Delete('/')
+  @Delete('')
   async deleteCart(@Request() req) {
     const cart = await this.cartService.getCart(req.user.userId);
     if (!cart) throw new NotFoundException('Cart does not exist');
-    return await this.cartService.deleteCart(req.user.userId);
+    return await this.cartService.clearCart(req.user.userId);
   }
 }
