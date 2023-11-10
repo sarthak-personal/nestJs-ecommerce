@@ -20,6 +20,7 @@ export class OrderController {
   constructor(private orderService: OrderService) {}
 
   // Get an order by order number
+  @UseGuards(JwtAuthGuard)
   @Get('/order-by-number/:orderNumber')
   async getOrderByOrderNumber(
     @Request() req,
@@ -30,6 +31,7 @@ export class OrderController {
   }
 
   // Get all orders of a specific user
+  @UseGuards(JwtAuthGuard)
   @Get('/user-orders')
   async getUserOrders(@Request() req): Promise<GetOrdersDto> {
     const userId = req.user.userId;
@@ -43,6 +45,7 @@ export class OrderController {
   }
 
   // Add a new order
+  @UseGuards(JwtAuthGuard)
   @Post()
   async addOrder(
     @Body() createdOrder: CreateOrderDto,

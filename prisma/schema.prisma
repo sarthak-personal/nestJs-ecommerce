@@ -29,16 +29,16 @@ model Product {
 }
 
 enum OrderStatus {
-  Pending
-  Shipped
-  Delivered
-  Canceled
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELED
 }
 
 enum PaymentMethod {
-  CreditCard
-  CashOnDelivery
-  PayPal
+  CREDIT_CARD
+  CASH_ON_DELIVERY
+  PAYPAL
 }
 
 model Order {
@@ -46,9 +46,9 @@ model Order {
   orderNumber     String        @unique
   userId          Int       
   orderDate       DateTime
-  status          OrderStatus   @default(Pending)
+  status          OrderStatus   @default(PENDING)
   totalAmount     Int
-  paymentMethod   PaymentMethod @default(CashOnDelivery)
+  paymentMethod   PaymentMethod @default(CASH_ON_DELIVERY)
   shippingAddress Address       @relation(fields: [addressId], references: [id])
   items           Item[]
   addressId       Int

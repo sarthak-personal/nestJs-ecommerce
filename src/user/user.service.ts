@@ -1,4 +1,9 @@
-import { Injectable, ConflictException, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/provider/database/prisma.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { CustomUser } from './entities/customUser.entity';
@@ -10,9 +15,14 @@ export class UserService {
 
   async addUser(createUserDTO: CreateUserDTO): Promise<CustomUser> {
     try {
-      // Validate input
-      if (!createUserDTO.username || !createUserDTO.email || !createUserDTO.password) {
-        throw new BadRequestException('Invalid input. Username, email, and password are required.');
+      if (
+        !createUserDTO.username ||
+        !createUserDTO.email ||
+        !createUserDTO.password
+      ) {
+        throw new BadRequestException(
+          'Invalid input. Username, email, and password are required.',
+        );
       }
 
       // Check for existing user

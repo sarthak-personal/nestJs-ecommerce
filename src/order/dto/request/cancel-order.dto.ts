@@ -1,6 +1,5 @@
-export class CreateProductDto {
+export class CancelOrderDto {
   name: string;
   description: string;
   price: number;
-  category: string;
 }
