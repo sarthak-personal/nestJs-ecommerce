@@ -60,7 +60,7 @@ export class OrderService {
       items: {
         create: itemData,
       },
-      orderDate: new Date(),
+      orderDate: createOrderDto.orderDate,
       status: OrderStatus.PENDING,
       totalAmount: createOrderDto.totalAmount,
       paymentMethod: createOrderDto.paymentMethod,
@@ -74,7 +74,6 @@ export class OrderService {
       },
     };
 
-    // Create the order in the database
     const prismaOrder = await this.prismaService.order.create({
       data: newOrder,
       include: { shippingAddress: true, items: true },
@@ -118,7 +117,6 @@ export class OrderService {
     });
 
     // Handle additional logic for marking an order as delivered.
-
     return deliveredOrder;
   }
 

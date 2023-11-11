@@ -45,7 +45,7 @@ model Order {
   id              Int           @id @default(autoincrement())
   orderNumber     String        @unique
   userId          Int       
-  orderDate       DateTime
+  orderDate       String
   status          OrderStatus   @default(PENDING)
   totalAmount     Int
   paymentMethod   PaymentMethod @default(CASH_ON_DELIVERY)

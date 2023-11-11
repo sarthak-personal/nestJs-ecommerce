@@ -7,7 +7,7 @@ export class GetOrderDto {
   id: number;
   orderNumber: string;
   items: Item[];
-  orderDate: Date;
+  orderDate: string;
   status: OrderStatus;
   totalAmount: number;
   paymentMethod: PaymentMethod;

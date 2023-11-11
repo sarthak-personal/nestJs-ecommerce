@@ -14,6 +14,9 @@ import { Order } from './entities/order.entity';
 import { GetOrdersDto } from './dto/response/get-orders.dto';
 import { GetOrderDto } from './dto/response/get-order.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Role } from 'src/auth/enums/role.enum';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @Controller('orders')
 export class OrderController {
@@ -64,7 +67,8 @@ export class OrderController {
   }
 
   // Mark an order as delivered
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.User)
   @Put('/:id/deliver')
   async markOrderAsDelivered(@Param('id') id: string): Promise<Order> {
     return await this.orderService.markOrderAsDelivered(Number(id));

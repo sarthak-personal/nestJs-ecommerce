@@ -4,6 +4,7 @@ import { Address } from '@prisma/client';
 
 export class CreateOrderDto {
   items: Item[];
+  orderDate: string;
   totalAmount: number;
   paymentMethod: PaymentMethod;
   shippingAddress: Address;

@@ -8,7 +8,7 @@ export class Order {
   orderNumber: string;
   userId: number;
   items: Item[];
-  orderDate: Date;
+  orderDate: string;
   status: OrderStatus;
   totalAmount: number;
   paymentMethod: PaymentMethod;
